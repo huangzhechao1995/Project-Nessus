@@ -15,9 +15,6 @@ import util
 
 
 
-
-
-
 if __name__=="__main__":
     
     """------------------------Parameters---------------------"""
@@ -28,7 +25,7 @@ if __name__=="__main__":
     df, df_test=read_data(args)
     n_train, p = df.shape
     n_test, p = df_test.shape
-    p=p-3  #the last three columns are identification code for
+    #p=p-3  #the last three columns are identification code for
     
     """--------------------------Model------------------------"""
     if args.method=="KNN":
@@ -41,9 +38,9 @@ if __name__=="__main__":
     for step in step_list: 
         ##!!!!!
         pred_length=min(args.pred_length, p-step) ####need to test !!!!!
-        number_mistake=np.zeros()
-        print("current step:{}  //".format(), "predicting columns {} to {}".format(df.columns[step],df.columns[step+args.pred_length-1]))
-        
+        number_mistake=np.zeros(len(df_test))
+        print("current step:{}  //".format(step),"predicting columns {} to {}".format(df.columns[step],df.columns[step+pred_length-1]))
+        model(df, df_test, step, pred_length)
         
         
 

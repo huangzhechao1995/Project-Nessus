@@ -75,5 +75,7 @@ def Frequency(df, df_test, step):
     Output:
         result : The prediction of Frequency Method, result size=(4000, pred_length)
     """
+    
+    "Waiting for Jixin to finish the implementation"
     df_selector=np.ones(len(df)).astype(bool)
     

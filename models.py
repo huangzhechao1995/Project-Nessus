@@ -1,7 +1,7 @@
 
 """
 Created on Thu Nov  8 14:42:34 2018
-@author: Zhechao Huang
+@author: Zhechao (Andrew) Huang
 
 """
 
@@ -20,11 +20,23 @@ def vote(df,neighbourslist):
     for i in range(len(dftemp.columns)):
         b = Counter(dftemp.iloc[:,i])
         L.append(b.most_common(1))
-    result=pd.DataFrame(np.array([x[0][0] for x in L]).reshape(1, df.shape[1]), columns=df.columns)
+    """try:
+        result_array=np.array([x[0][0] for x in L]).reshape(1, df.shape[1])
+        result=pd.DataFrame(result_array, columns=df.columns)
+    except:
+        print(L)
+        print(dftemp)
+        print(neighbourslist)
+        print(df.shape)
+        print(result_array)
+        raise
+    """
+    result_array=np.array([x[0][0] for x in L]).reshape(1, df.shape[1])
+    result=pd.DataFrame(result_array, columns=df.columns)
     return result
 
 def NumberofErrors(df1, df2):
-    errorCount=(df1.values==df2.values).sum()
+    errorCount=(df1.values!=df2.values).sum()
     return errorCount
 
 def KNN(df, df_test, step, pred_length, K=30):
@@ -53,15 +65,16 @@ def KNN(df, df_test, step, pred_length, K=30):
         test_dummies_df=pd.concat([df_temp,test_dummies_df])
         test_dummies_df.fillna(0,inplace=True)
     nbrs.fit(train_dummies_df)
-
-
-    distances, indices = nbrs.kneighbors(test_dummies_df.iloc[:,:])
     
-    print(indices.shape)
+        
+    distances, indices = nbrs.kneighbors(test_dummies_df.iloc[:,:])
+    #print(indices.shape)
     
     vote_result=[]
     for i in range(indices.shape[0]):
-        vote_result.append(vote(df.iloc[:,step:step+pred_length],indices[i,step: step+pred_length]))    
+        #if step==30:
+            #print(i)
+        vote_result.append(vote(df.iloc[:,step:step+pred_length],indices[i]))    
     vote_result=pd.concat(vote_result)
     return vote_result
 

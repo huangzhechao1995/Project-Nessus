@@ -2,7 +2,7 @@
 """
 Created on Thu Nov  8 14:20:51 2018
 
-@author: huang
+@author: Zhechao (Andrew) Huang
 """
 
 
@@ -42,6 +42,7 @@ if __name__=="__main__":
     """--------------------------Test-------------------------"""
     step_list=list(range(args.update_step, p, args.update_step))
     for step in step_list: 
+        
         ##!!!!!
         pred_length=min(args.pred_length, p-step) ####need to test !!!!!
         number_mistake=np.zeros(len(df_test))
@@ -55,6 +56,8 @@ if __name__=="__main__":
         print(time_since(time_point))
         time_point=time.time()
         predict_error_record.append((step, errorcount))
+        
+
 
 
         

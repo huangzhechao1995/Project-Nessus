@@ -25,6 +25,8 @@ def read_data(args):
     print("total data size:",df.shape)
     
     df, df_test=train_test_split(df,random_state=42,test_size=args.test_split)
+    df.index=range(df.shape[0])
+    df_test.index=range(df_test.shape[0])
     print("training data size:",df.shape)
     print("testing data size:",df_test.shape)
     return df,df_test

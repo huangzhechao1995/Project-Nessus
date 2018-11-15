@@ -78,17 +78,32 @@ def KNN(df, df_test, step, pred_length, K=30):
     vote_result=pd.concat(vote_result)
     return vote_result
 
-def Frequency(df, df_test, step):
+
+def Frequency(df, df_test, step, pred_length):
     """
     The Frequency Method of prediction
     Input:
         df     : The columns used to look up KNN (training data)
-        df_test: The columns used to calculate the KNN (testing data), for example 4000 test data. df_test size=(4000, p)
-        step   : Which means we use columns [0,step] to predict KNN
+        df_test: The columns used to calculate the frequency (testing data), for example 4000 test data. df_test size=(4000, p)
+        step   : Which means we use columns [0,step] to predict [step: step+pred_length]
     Output:
         result : The prediction of Frequency Method, result size=(4000, pred_length)
     """
+    vote_result=[]
+    for i in range(len(df_test)):
+        if i%500==0:
+            print("%.2f percent completed" % (i/4000*100))
+        df_test.iloc[i,:step]
+        dfselector=np.zeros(df.shape[0])
+        for colname in df.columns[:step]:
+            dfselector=dfselector + (df[colname]==df_test[colname][i]).astype(int)
+        indice=np.array(np.where(dfselector == dfselector.max())[0]).astype(int)
+        #print(type(indice))
+        #print("current step {},\t row {} in test set,\t best match has {} matches,\t {} best match set length".format(step, i, dfselector.max(), len(indice)))
+        
+        current_result=vote(df.iloc[:,step:step+pred_length], indice)
+        vote_result.append(current_result)
+    vote_result=pd.concat(vote_result)
+    return vote_result
     
-    "Waiting for Jixin to finish the implementation"
-    df_selector=np.ones(len(df)).astype(bool)
     

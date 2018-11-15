@@ -22,6 +22,10 @@ if __name__=="__main__":
     args=util.get_args()
     print("The Hyper-Parameters are:", args)
     
+    args.method="Frequency"
+    args.update_step=10
+    args.pred_length=10
+    
     """--------------------------Data-------------------------"""
     df, df_test=read_data(args)    #The process to get dummies need to be revised for better performance
     n_train, p = df.shape

@@ -48,9 +48,6 @@ if __name__=="__main__":
     """--------------------------Test-------------------------"""
     step_list=list(range(args.update_step, p, args.update_step))
     for step in step_list: 
-        #if step<=60:
-        #    continue
-        ##!!!!!
         pred_length=min(args.pred_length, p-step) ####need to test !!!!!
         number_mistake=np.zeros(len(df_test))
         print("-----------------------------------------------")
@@ -64,6 +61,8 @@ if __name__=="__main__":
         print(time_since(time_point))
         time_point=time.time()
         predict_error_record.append((step, errorcount))
+    
+    print(predict_error_record)
 
 
         

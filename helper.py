@@ -30,3 +30,10 @@ def read_data(args):
     print("training data size:",df.shape)
     print("testing data size:",df_test.shape)
     return df,df_test
+
+def NumberofErrors(df1, df2):
+    """
+    Calculate the number of difference values in two Dataframes (here, the two dataframes are our prediction and the truth)
+    """
+    errorCount=(df1.values!=df2.values).sum()
+    return errorCount

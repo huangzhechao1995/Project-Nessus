@@ -24,12 +24,12 @@ def read_data(args):
     df=pd.read_excel(args.root+args.filename,encoding="utf-8")
     print("total data size:",df.shape)
     
-    df, df_test=train_test_split(df,random_state=42,test_size=args.test_split)
-    df.index=range(df.shape[0])
+    df_train, df_test=train_test_split(df,random_state=42,test_size=args.test_split)
+    df_train.index=range(df_train.shape[0])
     df_test.index=range(df_test.shape[0])
-    print("training data size:",df.shape)
+    print("training data size:",df_train.shape)
     print("testing data size:",df_test.shape)
-    return df,df_test
+    return df,df_train,df_test
 
 def NumberofErrors(df1, df2):
     """

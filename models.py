@@ -14,9 +14,10 @@ from sklearn.model_selection import train_test_split
 from collections import Counter
 
 
-def vote(df,neighbourslist):
-    dftemp=df.iloc[neighbourslist,:]
+def vote(dftemp):
+    #dftemp=df.iloc[neighbourslist,:]
     L=[]
+    #print(dftemp.shape)
     for i in range(len(dftemp.columns)):
         b = Counter(dftemp.iloc[:,i])
         L.append(b.most_common(1))
@@ -33,12 +34,11 @@ def vote(df,neighbourslist):
         raise
     """
     #result_array=np.array([x[0][0] for x in L]).reshape(1, df.shape[1])
-    result=df.iloc[0,:]
+    df=dftemp.iloc[:1,:].copy()
     for i in range(len(L)):
         df.iloc[0,i]=L[i][0][0]
-    return df.iloc[:1,:]
-
-
+    return df
+   
 
 def KNN(df, df_test, step, pred_length, K=30):
     """
@@ -73,7 +73,7 @@ def KNN(df, df_test, step, pred_length, K=30):
     
     vote_result=[]
     for i in range(indices.shape[0]):
-        vote_result.append(vote(df.iloc[:,step:step+pred_length],indices[i]))   
+        vote_result.append(vote(df.iloc[indices[i],step:step+pred_length]))   
     #print(vote_result[:100])
     
     vote_result=pd.concat(vote_result)
@@ -101,7 +101,7 @@ def Frequency(df, df_test, step, pred_length):
         indice=np.array(np.where(dfselector == dfselector.max())[0]).astype(int)
         #print("current step {},\t row {} in test set,\t best match has {} matches,\t {} best match set length".format(step, i, dfselector.max(), len(indice)))
         
-        current_result=vote(df.iloc[:,step:step+pred_length], indice)
+        current_result=vote(df.iloc[indice,step:step+pred_length])
         vote_result.append(current_result)
     vote_result=pd.concat(vote_result)
     return vote_result

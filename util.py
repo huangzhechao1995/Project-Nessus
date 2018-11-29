@@ -17,5 +17,9 @@ def get_args():
     argparser.add_argument('--update_step',type=int, default=5)
     argparser.add_argument('--pred_length',type=int, default=5)
     argparser.add_argument('--instant_update',type=bool, default=False)
+    argparser.add_argument('--train_flag',type=bool, default=True)
+    argparser.add_argument('--test_flag', type=bool, default=False)
+    argparser.add_argument('--print_prediction',type=bool, default=False)
+    argparser.add_argument('--print_truth',type=bool, default=False)
     args = argparser.parse_args()
     return args

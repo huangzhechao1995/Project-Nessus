@@ -13,6 +13,7 @@ import pickle
 import pandas as pd
 import numpy as np
 from helper import *
+import util
 from scipy.stats import mode
 import json
 
@@ -30,6 +31,7 @@ EXAMPLE_COMMAND = "start an order"
 MENTION_REGEX = "^<@(|[WU].+?)>(.*)"    # @xxx 使用到的正则表达式
 
 """------------------------Get Mapping-------------------------"""
+args=util.get_args()
 df_alldata, df, df_test=read_data(args)    #The process to get dummies need to be revised for better performance
 del df
 del df_test

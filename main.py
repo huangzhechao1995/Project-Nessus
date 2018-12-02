@@ -18,6 +18,7 @@ from para_models import *
 
 IS_PARAMETERMODEL={
         "CART":True,
+        "RF": True,
         "LASSO":True,
         "KNN":False,
         "Frequency": False}
@@ -26,9 +27,9 @@ if __name__=="__main__":
     
     """------------------------Parameters---------------------"""
     args=util.get_args()
+    #uncomon  the line above the me
     
-    
-    args.method="KNN"
+    args.method="RF"
     args.train_flag=False
     args.test_flag=True
     args.update_step=10
@@ -64,6 +65,11 @@ if __name__=="__main__":
         model=Frequency
     if args.method=="CART":
         model=CART
+    if args.method=="RF":
+        model=RF
+
+
+
     
     metric=NumberofErrors
     

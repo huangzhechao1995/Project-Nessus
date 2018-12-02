@@ -28,11 +28,11 @@ if __name__=="__main__":
     args=util.get_args()
     
     
-    args.method="KNN"
-    args.train_flag=False
-    args.test_flag=True
-    args.update_step=10
-    args.pred_length=10
+    args.method="CART"
+    args.train_flag=True
+    args.test_flag=False
+    args.update_step=5
+    args.pred_length=5
     """
     args.test_split=100
     args.update_step=60
@@ -56,6 +56,9 @@ if __name__=="__main__":
     df_alldata=df_alldata.applymap(lambda x: str(x))
     df=df.applymap(lambda x: str(x))
     df_test=df_test.applymap(lambda x: str(x))
+    
+    
+    
     """--------------------------Model------------------------"""
     
     if args.method=="KNN":

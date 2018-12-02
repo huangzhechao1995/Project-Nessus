@@ -10,6 +10,7 @@ import pandas as pd
 from sklearn.model_selection import GridSearchCV
 
 
+
 def CART(df,df_test, step, pred_length, train_flag=True):
     """
     Input a dataframe(contains all information until current step)
@@ -32,14 +33,15 @@ def CART(df,df_test, step, pred_length, train_flag=True):
     for i in range(pred_length):
         modelname = 'step{}predicting{}.sav'.format(step,step+i)
         
+        
         #print('training', modelname)
-        if len(train_dummies_df.columns)!=len(test_dummies_df.columns):   #Ensure Train_dummies_df and Test_dummies_df to be the same shape
-            df_temp=pd.DataFrame(columns=sorted(list(set([x for x in train_dummies_df.columns]+[x for x in test_dummies_df.columns]))))   
-            
-            train_dummies_df=pd.concat([df_temp,train_dummies_df])
-            train_dummies_df.fillna(0,inplace=True)
-            test_dummies_df=pd.concat([df_temp,test_dummies_df])
-            test_dummies_df.fillna(0,inplace=True)
+        #if len(train_dummies_df.columns)!=len(test_dummies_df.columns):   #Ensure Train_dummies_df and Test_dummies_df to be the same shape
+        df_temp=pd.DataFrame(columns=sorted(list(set([x for x in train_dummies_df.columns]+[x for x in test_dummies_df.columns]))))   
+        df_temp.to_csv("header_{}.csv".format(step))
+        train_dummies_df=pd.concat([df_temp,train_dummies_df])
+        train_dummies_df.fillna(0,inplace=True)
+        test_dummies_df=pd.concat([df_temp,test_dummies_df])
+        test_dummies_df.fillna(0,inplace=True)
         
         X=train_dummies_df
         Y=df.iloc[:,step+i]
@@ -63,7 +65,7 @@ def CART(df,df_test, step, pred_length, train_flag=True):
     return pd.DataFrame(result_dict) if not train_flag else None
         
 
-def LASSO(df,df_test, step, pred_length, train_flag=True):
+def Random_Forest(df,df_test, step, pred_length, train_flag=True):
     """
     Input a dataframe(contains all information until current step)
     Output the prediction made in the next pred_length steps
@@ -79,11 +81,7 @@ def LASSO(df,df_test, step, pred_length, train_flag=True):
     (3) return model result.
     """
     
-    if training:
-        pass       
-    else:
-        pass
-        
+    pass
     
     
 

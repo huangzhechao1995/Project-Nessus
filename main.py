@@ -2,7 +2,7 @@
 """
 Created on Thu Nov  8 14:20:51 2018
 
-@author: Zhechao (Andrew) Huang
+@author: Zhechao (Andrew) Huang, Jixin Wang
 """
 
 
@@ -28,13 +28,13 @@ if __name__=="__main__":
     """------------------------Parameters---------------------"""
     args=util.get_args()
     #uncomon  the line above the me
-    
+    """
     args.method="RF"
     args.train_flag=False
     args.test_flag=True
     args.update_step=10
     args.pred_length=10
-    """
+    
     args.test_split=100
     args.update_step=60
     args.pred_length=33
@@ -112,8 +112,7 @@ if __name__=="__main__":
                 predict=model(df, df_test, step, pred_length, train_flag=False)  #predict is a list of prediction results
             
             truth=df_test.iloc[:,step:step+pred_length]
-            #print(truth.iloc[0,:])
-            #print(predict.iloc[0,:])
+
             errorcount=metric(predict, truth)
             
             if args.print_prediction:
@@ -133,6 +132,14 @@ if __name__=="__main__":
         
     
         print(predict_error_record)
+
+        total_error = 0
+        for ele in predict_error_record:
+            total_error += ele[1]
+        total_pred = (df_test.shape[1]-args.update_step)*df_test.shape[0]
+        accuracy = 1- total_error/total_pred
+        print("overall accuracy on test data: ", accuracy * 100, "%")
+
 
 
         

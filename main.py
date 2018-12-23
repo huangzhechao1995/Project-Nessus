@@ -19,7 +19,6 @@ from para_models import *
 IS_PARAMETERMODEL={
         "CART":True,
         "RF": True,
-        "LASSO":True,
         "KNN":False,
         "Frequency": False}
 
@@ -27,21 +26,7 @@ if __name__=="__main__":
     
     """------------------------Parameters---------------------"""
     args=util.get_args()
-    #uncomon  the line above the me
-    """
-    args.method="RF"
-    args.train_flag=False
-    args.test_flag=True
-    args.update_step=10
-    args.pred_length=10
-    
-    args.test_split=100
-    args.update_step=60
-    args.pred_length=33
-    args.print_prediction=True
-    args.print_truth=True
-    """
-    
+
     print("The Hyper-Parameters are:", args)
     
     """--------------------------Data-------------------------"""

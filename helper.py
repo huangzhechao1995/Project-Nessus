@@ -2,7 +2,7 @@
 """
 Created on Thu Nov  8 14:37:42 2018
 
-@author: Zhechao (Andrew) Huang 
+@author: Zhechao (Andrew) Huang, Jixin Wang 
 """
 
 import pandas as pd

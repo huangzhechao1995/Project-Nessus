@@ -2,7 +2,7 @@
 """
 Created on Wed Nov 21 21:31:32 2018
 
-@author: huang
+@author: Andrew Huang, Jixin Wang 
 """
 from sklearn import tree
 from sklearn.ensemble import RandomForestClassifier
@@ -28,7 +28,7 @@ def CART(df,df_test, step, pred_length, train_flag=True):
     (3) return model result.
     """
 
-    outputFolder = './model'
+    outputFolder = './CARTmodel'
     if not os.path.exists(outputFolder):
         os.makedirs(outputFolder)
     train_dummies_df=pd.get_dummies(df.iloc[:, :step])
@@ -65,31 +65,8 @@ def CART(df,df_test, step, pred_length, train_flag=True):
             clf = pickle.load(open('model/{}'.format(modelname), 'rb'))
             prediction=clf.predict(test_dummies_df)
             result_dict[df.columns[step+i]]=prediction
-            #print(type(prediction))
-            #print(prediction)
     return pd.DataFrame(result_dict) if not train_flag else None
         
-
-def LASSO(df,df_test, step, pred_length, train_flag=True):
-    """
-    Input a dataframe(contains all information until current step)
-    Output the prediction made in the next pred_length steps
-    
-    If training=True, then "df" is regarded as training set.
-    (1) we conduct 5-fold cross-validation on the training set, to select the best parameters
-    (2) we save the best model, saved as "model_name"
-    (3) return model result
-    
-    If training=False, it means we will do Testing, "df" is regarded as testing set.
-    (1) we load the best model saved
-    (2) test the model result on the testing set.
-    (3) return model result.
-    """
-    
-    if training:
-        pass       
-    else:
-        pass
         
     
 def RF(df,df_test, step, pred_length, train_flag=True):
@@ -109,7 +86,7 @@ def RF(df,df_test, step, pred_length, train_flag=True):
     """
     outputFolder = './RFmodel'
     if not os.path.exists(outputFolder):
-        os.makedirs(outputFolder) ###to test
+        os.makedirs(outputFolder)
     train_dummies_df=pd.get_dummies(df.iloc[:, :step])
     test_dummies_df=pd.get_dummies(df_test.iloc[:,:step])
     
@@ -117,8 +94,8 @@ def RF(df,df_test, step, pred_length, train_flag=True):
     for i in range(pred_length):
         modelname = 'RF_step{}predicting{}.sav'.format(step,step+i)
         
-        #print('training', modelname)
-        if len(train_dummies_df.columns)!=len(test_dummies_df.columns):   #Ensure Train_dummies_df and Test_dummies_df to be the same shape
+        if len(train_dummies_df.columns)!=len(test_dummies_df.columns):   
+        #Ensure Train_dummies_df and Test_dummies_df to be the same shape
             df_temp=pd.DataFrame(columns=sorted(list(set([x for x in train_dummies_df.columns]+[x for x in test_dummies_df.columns]))))   
             
             train_dummies_df=pd.concat([df_temp,train_dummies_df])
@@ -143,8 +120,6 @@ def RF(df,df_test, step, pred_length, train_flag=True):
             clf = pickle.load(open('RFmodel/{}'.format(modelname), 'rb'))
             prediction=clf.predict(test_dummies_df)
             result_dict[df.columns[step+i]]=prediction
-            #print(type(prediction))
-            #print(prediction)
     return pd.DataFrame(result_dict) if not train_flag else None
 
 

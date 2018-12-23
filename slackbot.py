@@ -2,7 +2,7 @@
 """
 Created on Sat Dec  1 21:03:01 2018
 
-@author: huang
+@author: Andrew Huang
 """
 
 import os

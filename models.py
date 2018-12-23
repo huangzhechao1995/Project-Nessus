@@ -1,7 +1,7 @@
 
 """
 Created on Thu Nov  8 14:42:34 2018
-@author: Zhechao (Andrew) Huang
+@author: Zhechao (Andrew) Huang, Jixin Wang 
 
 """
 
@@ -15,25 +15,15 @@ from collections import Counter
 
 
 def vote(dftemp):
-    #dftemp=df.iloc[neighbourslist,:]
+    """
+    input: subset of the dataframe to conduct column-wise majority vote 
+    output: prediction in dataframe format 
+    """
     L=[]
-    #print(dftemp.shape)
     for i in range(len(dftemp.columns)):
         b = Counter(dftemp.iloc[:,i])
         L.append(b.most_common(1))
-    #print(L)
-    """try:
-        result_array=np.array([x[0][0] for x in L]).reshape(1, df.shape[1])
-        result=pd.DataFrame(result_array, columns=df.columns)
-    except:
-        print(L)
-        print(dftemp)
-        print(neighbourslist)
-        print(df.shape)
-        print(result_array)
-        raise
-    """
-    #result_array=np.array([x[0][0] for x in L]).reshape(1, df.shape[1])
+
     df=dftemp.iloc[:1,:].copy()
     for i in range(len(L)):
         df.iloc[0,i]=L[i][0][0]
@@ -69,12 +59,10 @@ def KNN(df, df_test, step, pred_length, K=30):
     
         
     distances, indices = nbrs.kneighbors(test_dummies_df.iloc[:,:])
-    #print(indices.shape)
     
     vote_result=[]
     for i in range(indices.shape[0]):
         vote_result.append(vote(df.iloc[indices[i],step:step+pred_length]))   
-    #print(vote_result[:100])
     
     vote_result=pd.concat(vote_result)
     return vote_result
@@ -99,8 +87,7 @@ def Frequency(df, df_test, step, pred_length):
         for colname in df.columns[:step]:
             dfselector=dfselector + (df[colname]==df_test[colname][i]).astype(int)
         indice=np.array(np.where(dfselector == dfselector.max())[0]).astype(int)
-        #print("current step {},\t row {} in test set,\t best match has {} matches,\t {} best match set length".format(step, i, dfselector.max(), len(indice)))
-        
+       
         current_result=vote(df.iloc[indice,step:step+pred_length])
         vote_result.append(current_result)
     vote_result=pd.concat(vote_result)
